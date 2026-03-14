@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Privacy Policy – Subwave™</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f1f3f4;
+            color: #202124;
+            line-height: 1.6;
+        }
+
+        /* ---------- NAVBAR ---------- */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: auto;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: #202124;
+        }
+
+        .nav-inner a {
+            margin-left: 25px;
+            text-decoration: none;
+            color: #5f6368;
+            font-weight: 500;
+        }
+
+        .nav-inner a:hover {
+            color: #1a73e8;
+        }
+
+        /* ---------- HERO ---------- */
+
+        .hero {
+            background: radial-gradient(circle at 50% 0%, #e8f0fe 0%, #f1f3f4 70%);
+            padding: 80px 20px 60px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            margin-top: 12px;
+            font-size: 1rem;
+            color: #5f6368;
+        }
+
+        /* ---------- CONTENT ---------- */
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px 100px;
+        }
+
+        .policy-section {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            transition: all 0.2s ease;
+        }
+
+        .policy-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+        }
+
+        .policy-section h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a73e8;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .policy-section p {
+            color: #3c4043;
+            font-size: 0.97rem;
+            margin-bottom: 12px;
+        }
+
+        .policy-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .policy-section ul {
+            margin: 8px 0 0 20px;
+            color: #3c4043;
+            font-size: 0.97rem;
+        }
+
+        .policy-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .policy-section ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        .policy-section strong {
+            color: #202124;
+        }
+
+        code {
+            background: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #1a73e8;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #9aa0a6;
+            font-size: 0.9rem;
+            margin-top: 40px;
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            background: #202124;
+            color: #bdc1c6;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo">Subwave™</a>
+        <div>
+            <a href="index.html#features">Features</a>
+            <a href="privacy.html">Privacy</a>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <h1>Privacy Policy</h1>
+    <p>Last updated: March 14, 2026</p>
+</section>
+
+<div class="content-wrapper">
+
+    <div class="policy-section">
+        <h2>Introduction</h2>
+        <p>Subwave is committed to protecting your privacy. This Privacy Policy explains how Subwave handles your information when you use the mobile application.</p>
+    </div>
+
+    <div class="policy-section">
+        <h2>Information We Collect</h2>
+        <p>Subwave collects and stores the following information <strong>locally on your device only</strong>:</p>
+        <ul>
+            <li><strong>Server Credentials:</strong> Your Subsonic server URL, username, and password are stored locally on your device using encrypted storage to enable connection to your music server.</li>
+            <li><strong>Recently Played History:</strong> A list of songs you've recently played is stored locally to enhance your experience.</li>
+            <li><strong>Playback Position:</strong> The last playback position of songs is saved locally to resume where you left off.</li>
+            <li><strong>Playlist Data:</strong> Playlists are stored on your Subsonic server. Local playlist state is cached on your device for performance.</li>
+            <li><strong>Dashboard Cache:</strong> Recently added and random album data is cached locally so the app can display content immediately on startup, including when offline.</li>
+            <li><strong>Downloaded Music:</strong> If you choose to download songs for offline playback, those audio files are stored locally on your device's internal storage or SD card. Downloaded files remain until you manually remove them through the app or uninstall.</li>
+            <li><strong>Widget Data:</strong> Basic now-playing metadata (song title, artist, cover art identifier) is stored locally to power the home screen widgets.</li>
+        </ul>
+    </div>
+
+    <div class="policy-section">
+        <h2>Audio Recording Permission</h2>
+        <p>Subwave requests permission to record audio (<code>RECORD_AUDIO</code>) for the following purpose:</p>
+        <ul>
+            <li><strong>Real-time Visualization Only:</strong> This permission is used exclusively to analyze audio output in real-time for the visualizer feature.</li>
+            <li><strong>No Recording:</strong> Audio is never recorded, saved, or transmitted. It is only processed in memory for visualization purposes.</li>
+            <li><strong>Local Processing:</strong> All audio analysis happens locally on your device.</li>
+        </ul>
+    </div>
+
+    <div class="policy-section">
+        <h2>Notification Permission</h2>
+        <p>On Android 13 and above, Subwave requests notification permission to display playback controls and now-playing information in your device's notification area.</p>
+    </div>
+
+    <div class="policy-section">
+        <h2>Data Storage</h2>
+        <p>All data collected by Subwave is stored <strong>locally on your device</strong>:</p>
+        <ul>
+            <li>Subwave does not operate any servers or cloud services</li>
+            <li>Your credentials and music data are only sent to the Subsonic server you configure</li>
+            <li>Credentials are stored using Android's EncryptedSharedPreferences with AES-256-GCM encryption backed by the Android Keystore</li>
+            <li>All locally stored data is deleted when you uninstall the app</li>
+        </ul>
+    </div>
+
+    <div class="policy-section">
+        <h2>Third-Party Services</h2>
+        <p>Subwave connects to the following external services:</p>
+        <ul>
+            <li><strong>Your Subsonic Server:</strong> Subwave communicates with the Subsonic-compatible server you configure to stream music, retrieve library metadata, and sync playlists. You control which server the app connects to. Subwave does not have access to your server credentials or data beyond what is needed to operate the app on your behalf.</li>
+            <li><strong>LRCLIB (lrclib.net):</strong> When displaying synced lyrics, Subwave may make requests to lrclib.net, a free and open lyrics database, to fetch time-synced lyric data. No personally identifiable information is sent — only the song title, artist name, album name, and duration are included in the request. LRCLIB's own privacy policy applies to these requests.</li>
+        </ul>
+    </div>
+
+    <div class="policy-section">
+        <h2>Analytics and Tracking</h2>
+        <p><strong>Subwave does not use any analytics, tracking, or advertising services.</strong></p>
+        <ul>
+            <li>No usage data is collected</li>
+            <li>No crash reports are sent automatically (you may manually report issues via email)</li>
+            <li>No advertising or marketing tracking of any kind</li>
+        </ul>
+    </div>
+
+    <div class="policy-section">
+        <h2>Data Security</h2>
+        <ul>
+            <li>Server credentials are encrypted at rest using AES-256-GCM via the Android Keystore</li>
+            <li>Authentication tokens are generated fresh for each request using a cryptographically random salt — your password is never transmitted directly</li>
+            <li>Connections to your Subsonic server use HTTPS when your server supports it. Subwave will warn you if your server is configured with an unencrypted HTTP address.</li>
+            <li>No credentials are ever written to system logs or shared with other apps</li>
+        </ul>
+    </div>
+
+    <div class="policy-section">
+        <h2>Your Rights</h2>
+        <ul>
+            <li><strong>Access:</strong> All data is stored on your device and accessible through the app</li>
+            <li><strong>Deletion:</strong> Disconnect from your server in Settings to clear credentials, remove downloaded songs via the Downloads screen, or uninstall the app to delete all locally stored data</li>
+            <li><strong>Portability:</strong> Your music and playlists remain on your Subsonic server regardless of whether you use Subwave</li>
+        </ul>
+    </div>
+
+    <div class="policy-section">
+        <h2>Children's Privacy</h2>
+        <p>Subwave does not collect any personal information from anyone, including children under 13. The app requires a user-provided Subsonic server, which should be set up and managed by adults.</p>
+    </div>
+
+    <div class="policy-section">
+        <h2>Changes to This Policy</h2>
+        <p>This Privacy Policy may be updated from time to time. Any changes will be posted on this page with an updated date. Continued use of the app after changes are posted constitutes acceptance of the updated policy.</p>
+    </div>
+
+    <div class="policy-section">
+        <h2>Contact</h2>
+        <p>If you have any questions about this Privacy Policy, please contact:</p>
+        <ul>
+            <li>Email: <a href="mailto:your-email@example.com" style="color:#1a73e8;">your-email@example.com</a></li>
+            <li>GitHub: <a href="https://github.com/ejahdev" target="_blank" style="color:#1a73e8;">github.com/ejahdev</a></li>
+        </ul>
+    </div>
+
+    <p class="last-updated">This privacy policy was last updated on March 14, 2026.</p>
+
+</div>
+
+<footer>
+    <p>
+        <a href="privacy.html">Privacy Policy</a> |
+        <a href="mailto:your-email@example.com">Contact</a>
+    </p>
+    <p style="margin-top:10px;">© 2026 Subwave™. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
