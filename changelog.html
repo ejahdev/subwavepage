@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Changelog – Subwave™</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f1f3f4;
+    color: #202124;
+    line-height: 1.6;
+}
+
+/* ---------- NAVBAR ---------- */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    z-index: 100;
+}
+
+.nav-inner {
+    max-width: 1100px;
+    margin: auto;
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.nav-inner a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: #5f6368;
+    font-weight: 500;
+}
+
+.nav-inner a:hover {
+    color: #1a73e8;
+}
+
+.nav-inner a.active {
+    color: #1a73e8;
+}
+
+/* ---------- PAGE HEADER ---------- */
+
+.page-header {
+    background: radial-gradient(circle at 50% 0%, #e8f0fe 0%, #f1f3f4 70%);
+    padding: 70px 20px 60px;
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.page-header p {
+    margin-top: 10px;
+    color: #5f6368;
+    font-size: 1.05rem;
+}
+
+/* ---------- CHANGELOG LIST ---------- */
+
+.changelog-section {
+    padding: 60px 20px 100px;
+}
+
+.changelog-container {
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ---------- VERSION CARD ---------- */
+
+.version-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.06);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+}
+
+.version-card:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.version-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px 24px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.version-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.version-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.version-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #202124;
+    margin-bottom: 4px;
+}
+
+.version-preview {
+    font-size: 0.9rem;
+    color: #5f6368;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.version-preview.collapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.read-more {
+    color: #1a73e8;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.version-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px 18px;
+}
+
+.version-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    background: #f1f3f4;
+    color: #5f6368;
+    border: 1px solid rgba(0,0,0,0.06);
+}
+
+.tag-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #bdc1c6;
+    flex-shrink: 0;
+}
+
+.tag.stable     .tag-dot { background: #34a853; }
+.tag.beta       .tag-dot { background: #fbbc04; }
+.tag.alpha      .tag-dot { background: #ea4335; }
+.tag.unreleased .tag-dot { background: #9aa0a6; }
+
+.version-date {
+    font-size: 0.82rem;
+    color: #9aa0a6;
+    flex-shrink: 0;
+}
+
+/* ---------- EXPANDED CONTENT ---------- */
+
+.version-body {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    margin: 0 24px;
+}
+
+.version-body.open {
+    display: block;
+}
+
+.version-body .body-inner {
+    padding-top: 20px;
+}
+
+.version-body h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: #202124;
+}
+
+.version-body h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #202124;
+    margin: 18px 0 8px;
+}
+
+.version-body ul {
+    padding-left: 20px;
+    color: #3c4043;
+    font-size: 0.92rem;
+}
+
+.version-body ul li {
+    margin-bottom: 6px;
+    line-height: 1.55;
+}
+
+.version-body p {
+    font-size: 0.92rem;
+    color: #3c4043;
+    margin-bottom: 10px;
+}
+
+/* Collapse button */
+.collapse-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 18px;
+    color: #1a73e8;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+}
+
+.collapse-btn:hover {
+    text-decoration: underline;
+}
+
+/* Chevron icon */
+.chevron {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-left: auto;
+    transition: transform 0.2s ease;
+    color: #9aa0a6;
+}
+
+.version-card.open .chevron {
+    transform: rotate(180deg);
+}
+
+/* ---------- FOOTER ---------- */
+
+footer {
+    background: #202124;
+    color: #bdc1c6;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+footer a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 600px) {
+    .page-header h1 { font-size: 1.8rem; }
+    .version-logo { width: 40px; height: 40px; }
+    .version-title { font-size: 1rem; }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="index.html" style="text-decoration:none; color:inherit; margin-left:0;">
+            <span class="nav-logo">Subwave™</span>
+        </a>
+        <div>
+            <a href="index.html#features">Features</a>
+            <a href="changelog.html" class="active">Changelog</a>
+            <a href="privacy.html">Privacy</a>
+        </div>
+    </div>
+</nav>
+
+<div class="page-header">
+    <h1>Changelog</h1>
+    <p>What's new in Subwave™ — every release, every fix.</p>
+</div>
+
+<section class="changelog-section">
+    <div class="changelog-container" id="changelog">
+
+        <!-- ── Version 1.3.1 UNRELEASED ── -->
+        <div class="version-card" id="v1.3.1">
+            <div class="version-header" onclick="toggleCard('v1.3.1')">
+                <img src="assets/subwave logo background.png" alt="Subwave" class="version-logo">
+                <div class="version-meta">
+                    <div class="version-title">Version 1.3.1</div>
+                    <div class="version-preview">
+                        Pull-to-refresh on the dashboard, Continue Listening section, swipe the Now Playing bar to skip tracks,
+                        activity stats redesign, and star/play-count fixes in the All Songs list.
+                    </div>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+            <div class="version-footer">
+                <div class="version-tags">
+                    <span class="tag unreleased"><span class="tag-dot"></span>unreleased</span>
+                </div>
+                <span class="version-date">Mar 27, 2026</span>
+            </div>
+            <div class="version-body" id="body-v1.3.1">
+                <div class="body-inner">
+                    <h2>Version 1.3.1</h2>
+
+                    <h3>Added</h3>
+                    <ul>
+                        <li>Pull-to-refresh on the dashboard home screen — swipe down to reload all sections.</li>
+                        <li>Dashboard logo is now hidden by default; toggle to show it added in Theme Settings.</li>
+                        <li>Continue Listening section on the dashboard — featured track displays a progress bar and time remaining, and resumes playback from where you left off when tapped.</li>
+                        <li>Swipe left or right on the Now Playing bar to skip to the previous or next track — the title and artist slide with the gesture and spring back on release.</li>
+                        <li>Progress bar line shown at the bottom of the currently playing track card in the queue.</li>
+                    </ul>
+
+                    <h3>Changed</h3>
+                    <ul>
+                        <li>Activity stats tabs (Listening / Plays / Top Artists) moved outside the card into a standalone pill-shaped row; page indicator dots moved below the card.</li>
+                        <li>Plays chart bars now show play count and duration labels above each bar with an X PLAYS THIS WEEK summary line.</li>
+                        <li>Heatmap now reads "You listen most at X" instead of "Peak: X"; label repositioned under the Less → More legend.</li>
+                        <li>Continue Listening cards now snap smoothly and cycle infinitely through all tracks.</li>
+                        <li>Smart Mix buttons on the dashboard now show icon and label side by side in a compact pill layout.</li>
+                    </ul>
+
+                    <h3>Fixed</h3>
+                    <ul>
+                        <li>Star ratings in the All Songs list now use the outline star icon for unrated positions and the theme primary color for filled stars, matching the rest of the app.</li>
+                        <li>Play counts in the All Songs list now reflect locally tracked plays, not just the value last returned by the server.</li>
+                    </ul>
+
+                    <button class="collapse-btn" onclick="toggleCard('v1.3.1')">&#8593; Collapse</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Version 1.3 ── -->
+        <div class="version-card" id="v1.3">
+            <div class="version-header" onclick="toggleCard('v1.3')">
+                <img src="assets/subwave logo background.png" alt="Subwave" class="version-logo">
+                <div class="version-meta">
+                    <div class="version-title">Version 1.3</div>
+                    <div class="version-preview">
+                        Smart mixes, Songs library section, grouped Favorites by Artist/Album, Top Rated tabs,
+                        and a wave of performance improvements including instant cached loads and parallel dashboard fetches.
+                    </div>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+            <div class="version-footer">
+                <div class="version-tags">
+                    <span class="tag stable"><span class="tag-dot"></span>stable</span>
+                </div>
+                <span class="version-date">Mar 26, 2026</span>
+            </div>
+            <div class="version-body" id="body-v1.3">
+                <div class="body-inner">
+                    <h2>Version 1.3</h2>
+
+                    <h3>Added</h3>
+                    <ul>
+                        <li>After successfully adding a music source for the first time, the app now navigates directly to the home screen instead of returning to the Manage Sources page.</li>
+                        <li>Tapping the artist name on the Now Playing screen navigates to the artist's detail page.</li>
+                        <li>Tapping the album name on the Now Playing screen navigates to the album's detail page.</li>
+                        <li>Top Tracks section on the artist detail page now always shows a header with a loading indicator while fetching, retries up to 3 times, and shows an error message on failure instead of silently not appearing.</li>
+                        <li>Top Tracks section now shows "No top track charts found" when the server returns no data, instead of an empty section.</li>
+                        <li>About Artist section now always renders with loading, empty, and error states — retries up to 3 times on failure.</li>
+                        <li>Favorites section now groups favorited songs by Artist and Album tabs — songs are sorted alphabetically within each group, and each group is collapsible.</li>
+                        <li>Top Rated library section now shows Songs and Albums in separate tabs for both Subsonic and local-only users — albums display in a grid with star ratings, songs show inline star ratings.</li>
+                        <li>Star ratings now displayed on song rows in the Favorites screen, matching the rest of the app.</li>
+                        <li>Dashboard Most Played Tracks star rating now uses the app's theme primary color, matching the Favorites and Top Rated screens.</li>
+                        <li>Smart mix functions with dashboard quick mixes and library smart mix page.</li>
+                        <li>Added Songs section to the library home grid — loads all server songs with Room database caching for instant subsequent opens, supports search, sort by Title / Album / Year / Rating / Play Count, alphabet scrollbar, and Add All to Queue.</li>
+                        <li>Clearing the queue now automatically closes the Queue screen and Now Playing screen.</li>
+                        <li>Artist Radio mix pill on the dashboard now always shows the radio icon instead of album art.</li>
+                    </ul>
+
+                    <h3>Fixed</h3>
+                    <ul>
+                        <li>Fixed waveform visualizer showing a bowtie/hourglass artifact when volume is turned to near-zero — quantization noise from the 8-bit Visualizer API was being normalized against itself, inflating noise into a full-height alternating pattern; signal below the noise floor now renders as a flat line.</li>
+                        <li>Now Playing screen text now correctly uses white (dark-mode) colors in light mode when the ProjectM visualizer is active, matching the existing behaviour for blurred album art and color gradient backgrounds.</li>
+                        <li>Star and heart icons on the Now Playing screen are now the same size and slightly smaller (portrait 28dp, landscape 24dp); inactive state now uses the theme primary color instead of white, matching both light and dark modes.</li>
+                        <li>Artist image now loads correctly when navigating to the artist detail page from the Now Playing screen.</li>
+                        <li>Library section navigation state bug.</li>
+                    </ul>
+
+                    <h3>Changed</h3>
+                    <ul>
+                        <li>"Artist Radio" mix type label renamed to "Artist" across all translations (previously "Radio" in Japanese, Korean, Chinese, and wrong Spanish word "Artista" in French).</li>
+                        <li>Smart mix maximum size increased from 50 to 200 songs; random mix now draws from 20 server albums instead of 5.</li>
+                    </ul>
+
+                    <h3>Performance</h3>
+                    <ul>
+                        <li>Fixed cover art being re-fetched from the server on every load — Subsonic auth URLs include a randomly-generated token that changed on every call, defeating Coil's cache. Images now use a stable cache key and are properly served from memory and disk cache after the first load.</li>
+                        <li>Coil image memory cache capped at 128 MB and disk cache capped at 512 MB to support large libraries (~10,000 albums) without unbounded growth.</li>
+                        <li>Dashboard cover art now prefetched into Coil's disk cache as soon as server data arrives — images appear instantly when scrolling instead of loading on demand.</li>
+                        <li>Dashboard server fetches (recently added, random albums, frequent albums, random artists) now execute in parallel instead of sequentially, roughly halving load time on most servers.</li>
+                        <li>OkHttp connection pool increased from 5 to 10 connections and kept alive for 5 minutes; connect/read timeouts raised from 5s to 15/30s to prevent false failures on first connect and large responses.</li>
+                        <li>Dashboard cache extended to include Most Played albums, Most Played Tracks, and Random Artists — all five dashboard sections now appear instantly from cache on relaunch instead of showing a loading spinner.</li>
+                        <li>Song cache (Room) now supports filter queries by artist, album, and genre — genre album lists and album detail screens show cached content immediately while refreshing from the server.</li>
+                        <li>Artist detail screen now appears immediately after the single getArtistDetail call returns; song counts are derived from the local song cache when warm, eliminating one API call per album entirely.</li>
+                        <li>Song cache now syncs automatically in the background on every app launch (skipped if cache is less than 24 hours old), so genre/album/artist screens benefit from instant cached loads without requiring a visit to the All Songs screen.</li>
+                        <li>Album detail song rows now show the track number instead of cover art; the track number is replaced by the animated EQ indicator when the song is playing.</li>
+                        <li>Swiping up on the Now Playing screen opens the queue.</li>
+                        <li>Artists, Genres, Albums, By Year, Favorites, and Top Rated library sections now show cached content immediately on repeat visits within the same session, with a silent background refresh.</li>
+                        <li>Top Rated now fetches its album and song lists in parallel instead of sequentially.</li>
+                        <li>Dashboard cached content is now shown immediately on relaunch instead of being hidden behind a loading spinner while the background refresh runs.</li>
+                        <li>Songs section no longer triggers a full server re-fetch on every open — re-fetches only when the cache is older than 24 hours, matching the background sync policy.</li>
+                        <li>Library section data (Artists, Genres, Albums, By Year) is now persisted to disk and restored at app startup — all sections load instantly from cache on every launch, with a silent background refresh.</li>
+                    </ul>
+
+                    <button class="collapse-btn" onclick="toggleCard('v1.3')">&#8593; Collapse</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Version 1.2.2 ── -->
+        <div class="version-card" id="v1.2.2">
+            <div class="version-header" onclick="toggleCard('v1.2.2')">
+                <img src="assets/subwave logo background.png" alt="Subwave" class="version-logo">
+                <div class="version-meta">
+                    <div class="version-title">Version 1.2.2</div>
+                    <div class="version-preview">
+                        Offline playback fixes, local library improvements, Japanese and Korean translations,
+                        and internet radio placeholders in the Now Playing screen.
+                    </div>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+            <div class="version-footer">
+                <div class="version-tags">
+                    <span class="tag stable"><span class="tag-dot"></span>stable</span>
+                </div>
+                <span class="version-date">Mar 20, 2026</span>
+            </div>
+            <div class="version-body" id="body-v1.2.2">
+                <div class="body-inner">
+                    <h2>Version 1.2.2</h2>
+
+                    <h3>Fixed</h3>
+                    <ul>
+                        <li>Fixed widget not updating album art when local source files are playing — widget now resolves local cover art via the on-disk cache instead of routing through the Subsonic API client.</li>
+                        <li>Fixed playback stopping when the user presses the back button to minimize the app — <code>MainActivity.onDestroy</code> no longer calls <code>stopService</code> on the playback service.</li>
+                        <li>Playback now correctly stops when the user swipes the app away from the recents screen — <code>PlaybackService</code> handles <code>onTaskRemoved</code> to stop the player and shut down the service.</li>
+                        <li>Fixed star ratings not appearing for local songs in album detail screen.</li>
+                        <li>Fixed star ratings not appearing for local songs in the dashboard Most Played Tracks section.</li>
+                        <li>Fixed downloaded/cached songs showing 0 songs when browsing the Local Library section — album representatives now use a <code>local_album_</code> prefixed ID so the offline song list is loaded correctly.</li>
+                        <li>Fixed <code>Unable to resolve host</code> error appearing when browsing the library with no internet — all library sections now fall back to local/downloaded content when the server is unreachable.</li>
+                        <li>Fixed offline playback not starting for downloaded songs — selecting a downloaded song in airplane mode now uses the downloaded file path directly instead of generating a network stream URL.</li>
+                    </ul>
+
+                    <h3>Added</h3>
+                    <ul>
+                        <li>Favorites section now shows an empty state message ("No favorites yet. Heart a song to see it here.") when no songs have been favorited.</li>
+                        <li>Local-only users can now favorite and star-rate songs — persisted to <code>local_favorites.json</code> and reflected in the Favorites and Top Rated library sections.</li>
+                        <li>Local-only users now have a Most Played Tracks section on the dashboard — play counts are tracked on-device and displayed identically to the Subsonic experience.</li>
+                        <li>Added Download Playlist option to the three-dot menu on each server playlist — queues all songs in the playlist for offline download.</li>
+                        <li>Downloads now check available storage before writing — if the device has less free space than the file size (plus a 10 MB buffer), the download is marked failed with a localized error message.</li>
+                        <li>Added Japanese and Korean translations — full coverage of all strings.</li>
+                        <li>Internet radio stations now show a radio icon placeholder in the Now Playing screen album art area, the Now Playing bar, and the Recently Played section on the dashboard.</li>
+                    </ul>
+
+                    <button class="collapse-btn" onclick="toggleCard('v1.2.2')">&#8593; Collapse</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Version 1.2.1 ── -->
+        <div class="version-card" id="v1.2.1">
+            <div class="version-header" onclick="toggleCard('v1.2.1')">
+                <img src="assets/subwave logo background.png" alt="Subwave" class="version-logo">
+                <div class="version-meta">
+                    <div class="version-title">Version 1.2.1</div>
+                    <div class="version-preview">
+                        Local-only playlists and internet radio, queue fling-scroll fix, and
+                        "Add to Queue" / "Play Next" actions now work correctly for local artists and albums.
+                    </div>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+            <div class="version-footer">
+                <div class="version-tags">
+                    <span class="tag stable"><span class="tag-dot"></span>stable</span>
+                </div>
+                <span class="version-date">Mar 19, 2026</span>
+            </div>
+            <div class="version-body" id="body-v1.2.1">
+                <div class="body-inner">
+                    <h2>Version 1.2.1</h2>
+
+                    <h3>Fixed</h3>
+                    <ul>
+                        <li>Fixed "Add to Queue" and "Play Next" being silently ignored for local artists in the artist grid — actions now use <code>getLocalArtistSongs()</code> instead of calling the Subsonic API.</li>
+                        <li>Fixed "Add to Queue" and "Play Next" being silently ignored for local albums in the Albums by Year section — actions now use <code>getLocalAlbumSongs()</code> instead of calling the Subsonic API.</li>
+                        <li>Fixed queue screen unable to fling-scroll upward — <code>onPreFling</code> was consuming all downward fling velocity unconditionally; it now only consumes velocity when a swipe-to-dismiss drag was already in progress.</li>
+                        <li>Local-only users can now create playlists, add songs to playlists, delete and rename playlists, and remove individual songs from playlists — playlists are stored locally on device in <code>local_playlists.json</code>.</li>
+                        <li>Local-only users can now add, edit, delete, and play internet radio stations — stations are stored on-device and persist across sessions.</li>
+                    </ul>
+
+                    <h3>Added</h3>
+                    <ul>
+                        <li>Playlists are now fully functional for local-only users (no Subsonic server required), with all CRUD operations backed by on-device JSON storage.</li>
+                        <li>Added "Add to Queue" and "Play Next" 3-dot menu to each playlist item in the Playlists section, consistent with the rest of the library UI.</li>
+                        <li>Internet Radio is now fully functional for local-only users — add stations by URL, edit, delete, and play them without a Subsonic server; "Import from Subsonic" option is hidden when no server is configured.</li>
+                    </ul>
+
+                    <button class="collapse-btn" onclick="toggleCard('v1.2.1')">&#8593; Collapse</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Version 1.2 ── -->
+        <div class="version-card" id="v1.2">
+            <div class="version-header" onclick="toggleCard('v1.2')">
+                <img src="assets/subwave logo background.png" alt="Subwave" class="version-logo">
+                <div class="version-meta">
+                    <div class="version-title">Version 1.2</div>
+                    <div class="version-preview">
+                        Multi-language support (German, French, Spanish, Chinese), local device music
+                        merged into the library, Android 15 edge-to-edge compliance, and queue overlay redesign.
+                    </div>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+            <div class="version-footer">
+                <div class="version-tags">
+                    <span class="tag stable"><span class="tag-dot"></span>stable</span>
+                </div>
+                <span class="version-date">Mar 18, 2026</span>
+            </div>
+            <div class="version-body" id="body-v1.2">
+                <div class="body-inner">
+                    <h2>Version 1.2</h2>
+
+                    <h3>Added</h3>
+                    <p><strong>Internationalization</strong></p>
+                    <ul>
+                        <li>Added multi-language support for German, French, Spanish, and Chinese Simplified.</li>
+                        <li>App UI will now automatically match your device's language setting.</li>
+                        <li>All screens fully localized: Library, Now Playing, Equalizer, Queue, Downloads, Settings, Theme, Search, and more.</li>
+                    </ul>
+                    <p><strong>Local Music Integration</strong></p>
+                    <ul>
+                        <li>Local device music now merged into Artists, Albums, and all library sections alongside Subsonic server content.</li>
+                        <li>Local files display a device badge icon on artist/album grid cards and song rows for easy identification.</li>
+                        <li>All library sections work in local-only mode: Artists and Albums pull from device files, Genres derived from file metadata, Recently Added sorted by year, Favorites/Playlists/Internet Radio show empty states cleanly.</li>
+                    </ul>
+
+                    <h3>Fixed</h3>
+                    <ul>
+                        <li>Migrated to <code>enableEdgeToEdge()</code> API, replacing deprecated <code>statusBarColor</code>, <code>navigationBarColor</code>, and <code>setDecorFitsSystemWindows</code> calls (Android 15 compliance).</li>
+                        <li>Replaced deprecated <code>systemWindowInsetBottom</code> with <code>WindowInsetsCompat</code> for nav bar inset reads.</li>
+                        <li>Added 16KB memory page size support and upgraded NDK to r27c for compatibility with devices using large memory pages.</li>
+                        <li>Fixed stale Subsonic dashboard data persisting after removing a server — dashboard now reloads from local library immediately.</li>
+                        <li>Fixed all library sections showing "No server configured" error for local-only users.</li>
+                        <li>Fixed local music playback: <code>file://</code> URIs now correctly built and threaded through queue, PlaybackService, and ExoPlayer for all queue actions.</li>
+                        <li>Fixed playback stopping when the app is minimized — ExoPlayer now holds a wake lock and WifiLock to keep the CPU and network active during streaming.</li>
+                        <li>Fixed foreground service being destroyed when the media notification was dismissed while paused — notification is now always <code>ongoing</code> while the service is alive.</li>
+                        <li>Eliminated a <code>runBlocking</code> call on the main thread during service teardown; final position save is now fire-and-forget.</li>
+                        <li>Reduced CPU usage while paused — the 1-second playback state timer now skips updates on ticks where nothing has changed.</li>
+                        <li>Queue persistence now only writes to disk when the queue composition or current track index actually changes, instead of on every 1-second position tick.</li>
+                        <li>Download progress now emits at most once per integer percent instead of once per 8 KB read buffer, eliminating hundreds of redundant emissions per file.</li>
+                        <li>Dashboard data is now fetched only once per ViewModel session — redundant calls from recomposition are no-ops.</li>
+                        <li>Queue screen is now an animated overlay on top of Now Playing (same slide-up sheet pattern as Now Playing over the main screen) — opens and closes without a full page reload.</li>
+                        <li>Fixed queue swipe-to-dismiss: drag now tracks the finger synchronously with no spring lag and reliably dismisses on fast fling or slow drag past the threshold.</li>
+                        <li>Fixed queue swipe-to-dismiss bounce: fling velocity is now consumed by the dismiss gesture so the list no longer fires extra scroll events that snapped the overlay back to the top before closing.</li>
+                    </ul>
+
+                    <button class="collapse-btn" onclick="toggleCard('v1.2')">&#8593; Collapse</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Version 1.1 ── -->
+        <div class="version-card" id="v1.1">
+            <div class="version-header" onclick="toggleCard('v1.1')">
+                <img src="assets/subwave logo background.png" alt="Subwave" class="version-logo">
+                <div class="version-meta">
+                    <div class="version-title">Version 1.1</div>
+                    <div class="version-preview">
+                        Visual EQ curve, Squiggly/Breathing/Dotted progress bar styles, EQ preset persistence,
+                        waveform visualizer fixes, and widget improvements.
+                    </div>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+            <div class="version-footer">
+                <div class="version-tags">
+                    <span class="tag stable"><span class="tag-dot"></span>stable</span>
+                </div>
+                <span class="version-date">Mar 17, 2026</span>
+            </div>
+            <div class="version-body" id="body-v1.1">
+                <div class="body-inner">
+                    <h2>Version 1.1</h2>
+
+                    <h3>Added</h3>
+                    <ul>
+                        <li>Added a visual EQ curve that updates in real time as bands are adjusted.</li>
+                        <li>Added Flat and Custom preset chips.</li>
+                        <li>Selecting a preset or adjusting bands manually now saves automatically.</li>
+                        <li>Opening an external equalizer now automatically disables the internal EQ to free up audio memory for the external app.</li>
+                        <li>Added Squiggly progress bar style — an Android Auto-style animated sine wave with a flat unplayed section and squiggly played section, selectable in Settings.</li>
+                        <li>Added Breathing progress bar style.</li>
+                        <li>Added Dotted progress bar style.</li>
+                    </ul>
+
+                    <h3>Fixed</h3>
+                    <ul>
+                        <li>Fixed crash on app relaunch caused by DataStore singleton being incorrectly scoped inside LibraryViewModel instead of at file level.</li>
+                        <li>Fixed Most Played Tracks section on dashboard not showing accurate song play count.</li>
+                        <li>Fixed bass boost and virtualizer controls that had no effect due to an audioserver memory limit — these have been removed.</li>
+                        <li>EQ settings (band levels, selected preset) now persist across app restarts.</li>
+                        <li>Progress bar now shows -(duration - position) on the right side instead of track length.</li>
+                        <li>Waveform visualizer now appears instantly on first play.</li>
+                        <li>Visualizer no longer loses data when tracks change or analyzer is recreated.</li>
+                        <li>Fixed an issue where swiping right or pressing previous while more than 3 seconds into a song would cause the album art card to get stuck, breaking further swipe gestures.</li>
+                        <li>Tapping on the widget now opens the app directly to the Now Playing screen if a song is loaded, otherwise to dashboard.</li>
+                        <li>Fixed Now Playing screen re-animating even if already open from a widget tap on release build.</li>
+                        <li>Fixed users with local-only (no Subsonic server) being unable to access app after adding local-only media source.</li>
+                    </ul>
+
+                    <button class="collapse-btn" onclick="toggleCard('v1.1')">&#8593; Collapse</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Version 1.0 ── -->
+        <div class="version-card" id="v1.0">
+            <div class="version-header" onclick="toggleCard('v1.0')">
+                <img src="assets/subwave logo background.png" alt="Subwave" class="version-logo">
+                <div class="version-meta">
+                    <div class="version-title">Version 1.0 — Initial Release</div>
+                    <div class="version-preview">
+                        The first release of Subwave™. Subsonic/Navidrome streaming, real-time MilkDrop
+                        visualizations, equalizer, offline playback, lyrics, scrobbling, and more.
+                    </div>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+            <div class="version-footer">
+                <div class="version-tags">
+                    <span class="tag stable"><span class="tag-dot"></span>stable</span>
+                </div>
+                <span class="version-date">Mar 14, 2026</span>
+            </div>
+            <div class="version-body" id="body-v1.0">
+                <div class="body-inner">
+                    <h2>Version 1.0</h2>
+
+                    <h3>Initial Release</h3>
+                    <ul>
+                        <li>Subsonic, Navidrome, Airsonic, Gonic, and Ampache server support.</li>
+                        <li>Real-time MilkDrop visualizations powered by ProjectM.</li>
+                        <li>Queue management with drag-to-reorder.</li>
+                        <li>Shuffle and repeat modes.</li>
+                        <li>Recently played tracking.</li>
+                        <li>Offline playback with downloaded songs.</li>
+                        <li>Home screen widgets (small and medium).</li>
+                        <li>Equalizer.</li>
+                        <li>Synced lyrics via LRCLIB and Subsonic API.</li>
+                        <li>Playlist management (create, edit, delete, reorder).</li>
+                        <li>Internet radio station support.</li>
+                        <li>Artist, album, genre, and year browsing.</li>
+                        <li>Starred songs / favorites.</li>
+                        <li>Song and album ratings.</li>
+                        <li>Dynamic Material Design 3 theming.</li>
+                        <li>Custom accent color picker.</li>
+                        <li>Waveform seek bar.</li>
+                        <li>Local device music library support.</li>
+                        <li>Dashboard with recently added, random albums, most played, and random artists.</li>
+                        <li>Scrobbling support.</li>
+                    </ul>
+
+                    <button class="collapse-btn" onclick="toggleCard('v1.0')">&#8593; Collapse</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <p>
+        <a href="privacy.html">Privacy Policy</a> |
+        <a href="changelog.html">Changelog</a> |
+        <a href="mailto:your-email@example.com">Contact</a>
+    </p>
+    <p style="margin-top:10px;">© 2026 Subwave™. All rights reserved.</p>
+</footer>
+
+<script>
+function toggleCard(id) {
+    const card = document.getElementById(id);
+    const body = document.getElementById('body-' + id);
+    const isOpen = card.classList.contains('open');
+
+    if (isOpen) {
+        card.classList.remove('open');
+        body.classList.remove('open');
+    } else {
+        card.classList.add('open');
+        body.classList.add('open');
+    }
+}
+
+// Open card if URL hash matches a version
+window.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+        toggleCard(hash);
+        document.getElementById(hash).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+});
+</script>
+
+</body>
+</html>
