@@ -340,6 +340,48 @@ footer a:hover {
 <section class="changelog-section">
     <div class="changelog-container" id="changelog">
 
+        <!-- ── Version 1.3.2 ── -->
+        <div class="version-card" id="v1.3.2">
+            <div class="version-header" onclick="toggleCard('v1.3.2')">
+                <img src="assets/subwave logo background.png" alt="Subwave" class="version-logo">
+                <div class="version-meta">
+                    <div class="version-title">Version 1.3.2</div>
+                    <div class="version-preview">
+                        Internet radio crash and overflow fixes — Now Playing screen no longer crashes on live streams,
+                        radio stations excluded from Continue Listening, Add Media Source simplified to Subsonic and Local Device,
+                        and seek bar scrubbing, waveform, and thumb hidden correctly for all styles during radio playback.
+                    </div>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+            <div class="version-footer">
+                <div class="version-tags">
+                    <span class="tag stable"><span class="tag-dot"></span>stable</span>
+                </div>
+                <span class="version-date">Apr 1, 2026</span>
+            </div>
+            <div class="version-body" id="body-v1.3.2">
+                <div class="body-inner">
+                    <h2>Version 1.3.2</h2>
+
+                    <h3>Fixed</h3>
+                    <ul>
+                        <li>Opening the Now Playing screen while an internet radio station is playing no longer crashes — the smooth-position interpolator now correctly handles live streams where ExoPlayer reports no known duration.</li>
+                        <li>Internet radio stations no longer appear in the Continue Listening section on the dashboard.</li>
+                        <li>Add Media Source screen now shows only Subsonic and Local Device — Navidrome, Airsonic, Gonic, and Ampache entries removed since they all use the same Subsonic-compatible API; the Subsonic option description updated to reflect this.</li>
+                        <li>Seek bar right-side time label now shows "∞" instead of an overflow value (e.g. -25197142:-32) when playing an internet radio station — ExoPlayer reports <code>Long.MIN_VALUE</code> for live streams with no known duration, which previously overflowed when subtracted from position.</li>
+                        <li>Scrubbing is now disabled on all seek bar styles (default, squiggly, dotted, breathing, waveform) when playing internet radio.</li>
+                        <li>Waveform seek bar now falls back to the flat line bar when playing internet radio instead of attempting to render a waveform.</li>
+                        <li>Seek bar playhead thumb is now hidden on the default and squiggly styles when playing internet radio, matching the other styles.</li>
+                    </ul>
+
+                    <button class="collapse-btn" onclick="toggleCard('v1.3.2')">&#8593; Collapse</button>
+                </div>
+            </div>
+        </div>
+
         <!-- ── Version 1.3.1 ── -->
         <div class="version-card" id="v1.3.1">
             <div class="version-header" onclick="toggleCard('v1.3.1')">
