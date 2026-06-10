@@ -340,6 +340,51 @@ footer a:hover {
 <section class="changelog-section">
     <div class="changelog-container" id="changelog">
 
+        <!-- ── Version 1.3.4 ── -->
+        <div class="version-card" id="v1.3.4">
+            <div class="version-header" onclick="toggleCard('v1.3.4')">
+                <img src="assets/subwave logo background.png" alt="Subwave" class="version-logo">
+                <div class="version-meta">
+                    <div class="version-title">Version 1.3.4</div>
+                    <div class="version-preview">
+                        Folder browser for local media sources, faster library loading via indexed MediaStore query,
+                        SD card support on Android 10+, artist grouping fixes, and startup crash fixes for large queues and cache OutOfMemoryError.
+                    </div>
+                </div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+            <div class="version-footer">
+                <div class="version-tags">
+                    <span class="tag unreleased"><span class="tag-dot"></span>unreleased</span>
+                </div>
+                <span class="version-date">Unreleased</span>
+            </div>
+            <div class="version-body" id="body-v1.3.4">
+                <div class="body-inner">
+                    <h2>Version 1.3.4</h2>
+
+                    <h3>Added</h3>
+                    <ul>
+                        <li>Folder browser when adding a local media source — navigate storage volumes and tap into directories to select a folder instead of typing the path manually.</li>
+                    </ul>
+
+                    <h3>Fixed</h3>
+                    <ul>
+                        <li>Local media source library loading was extremely slow on large collections — now uses a single indexed MediaStore query instead of opening and reading metadata from each audio file individually.</li>
+                        <li>Local media source on Android 10+ now queries all storage volumes so SD card content is no longer missing from the library.</li>
+                        <li>Artists in a local media source library are now grouped correctly — uses the album artist tag when available, and strips featured-artist annotations (feat., ft., featuring) from the track artist as a fallback.</li>
+                        <li>App could crash on startup after extended use if the playback queue had grown very large — the persisted queue is now capped at 500 songs to prevent multi-MB DataStore writes.</li>
+                        <li>App crash on startup when OutOfMemoryError occurred while reading cached data — all DataStore read and write handlers now catch Throwable so the app recovers gracefully instead of force-closing.</li>
+                        <li>Library cache was storing the full album list twice (once for Albums view, once for By Year view) — now stored once and derived for both views, halving the cache file size for large libraries.</li>
+                    </ul>
+
+                    <button class="collapse-btn" onclick="toggleCard('v1.3.4')">&#8593; Collapse</button>
+                </div>
+            </div>
+        </div>
+
         <!-- ── Version 1.3.3 ── -->
         <div class="version-card" id="v1.3.3">
             <div class="version-header" onclick="toggleCard('v1.3.3')">
@@ -357,7 +402,7 @@ footer a:hover {
             </div>
             <div class="version-footer">
                 <div class="version-tags">
-                    <span class="tag latest"><span class="tag-dot"></span>latest</span>
+                    <span class="tag stable"><span class="tag-dot"></span>stable</span>
                 </div>
                 <span class="version-date">Apr 1, 2026</span>
             </div>
